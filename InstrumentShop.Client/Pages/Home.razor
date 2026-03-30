@@ -1,0 +1,123 @@
+﻿@page "/"
+@using InstrumentShop.Shared
+@using System.Net.Http.Json
+@inject HttpClient Http
+
+@* Postavljamo interaktivnost da bi Search bar radio u browseru *@
+@rendermode InteractiveWebAssembly
+
+<h1>Prodavnica Instrumenata</h1>
+
+<div class="input-group mb-5 shadow-sm">
+    <span class="input-group-text bg-white border-end-0 text-muted">🔍</span>
+    <input type="text"
+           class="form-control form-control-lg border-start-0 ps-0"
+           placeholder="Pretraži gitare, pojačala..."
+           @oninput="FilterInstruments" />
+</div>
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Prodavnica instrumenata</h2>
+    <a href="/add-instrument" class="btn btn-primary">+ Dodaj instrument</a>
+</div>
+
+@if (filteredInstruments == null)
+{
+    <p>Učitavanje podataka...</p>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            @foreach (var instrument in filteredInstruments)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">@instrument.Name</h5>
+                            <p class="text-muted mb-1">Na stanju: <strong>@instrument.StockQuantity</strong> kom.</p>
+                            <p class="text-primary fw-bold fs-5">@instrument.Price €</p>
+                        </div>
+                        <div class="card-footer bg-white border-0">
+                            <button class="btn btn-dark btn-sm w-100">Detalji</button>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @* Malo CSS-a za "vau" efekat *@
+    <style>
+        .instrument-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+            .instrument-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+            }
+    </style>
+    @if (filteredInstruments != null && filteredInstruments.Count == 0)
+    {
+        <div class="alert alert-warning">
+            Nažalost, nemamo nijedan instrument koji se zove "<strong>@searchTerm</strong>".
+        </div>
+    }
+}
+
+@code {
+    private InstrumentDto[]? allInstruments;
+    private List<InstrumentDto>? filteredInstruments;
+    private string searchTerm = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            allInstruments = await Http.GetFromJsonAsync<InstrumentDto[]>("api/instruments");
+
+            // Dodajemo proveru: ako je allInstruments null, napravi praznu listu
+            filteredInstruments = allInstruments?.ToList() ?? new List<InstrumentDto>();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Greška pri učitavanju: {ex.Message}");
+            filteredInstruments = new List<InstrumentDto>(); // Inicijalizuj praznu listu u slučaju greške
+        }
+    }
+
+    private void FilterInstruments(ChangeEventArgs e)
+    {
+        searchTerm = e.Value?.ToString() ?? "";
+        if (allInstruments != null)
+        {
+            filteredInstruments = allInstruments
+                .Where(i => i.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+    }
+    private async Task DeleteInstrument(int id)
+    {
+        var response = await Http.DeleteAsync($"api/instruments/{id}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            // Ponovo učitavamo podatke u allInstruments
+            allInstruments = await Http.GetFromJsonAsync<InstrumentDto[]>("api/instruments");
+
+            // I odmah osvežavamo filtriranu listu da bi se promena videla na ekranu
+            filteredInstruments = allInstruments?.ToList();
+
+            // Ako je korisnik nešto kucao u search, ponovo primeni filter
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                filteredInstruments = allInstruments?
+                    .Where(i => i.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+        }
+    }
+    
+}

@@ -1,0 +1,74 @@
+﻿@page "/add-instrument"
+@page "/edit-instrument/{Id:int}"
+@using InstrumentShop.Shared
+@using Microsoft.AspNetCore.Components.Forms
+@rendermode InteractiveWebAssembly
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<div class="card p-4 shadow-sm" style="max-width: 500px; min-height: 450px;">
+    @* Koristimo dinamički naslov *@
+    <h3 class="mb-4">@Naslov</h3>
+
+    <EditForm Model="instrument" OnValidSubmit="SaveInstrument" FormName="AddInstrumentForm">
+        <DataAnnotationsValidator />
+
+        <div class="mb-3" style="min-height: 85px;">
+            <label class="form-label">Naziv:</label>
+            <InputText @bind-Value="instrument.Name" class="form-control" />
+            <ValidationMessage For="@(() => instrument.Name)" class="text-danger" />
+        </div>
+
+        <div class="mb-3" style="min-height: 85px;">
+            <label class="form-label">Cena (€):</label>
+            <InputNumber @bind-Value="instrument.Price" class="form-control" />
+            <ValidationMessage For="@(() => instrument.Price)" class="text-danger" />
+        </div>
+
+        <div class="mb-3" style="min-height: 85px;">
+            <label class="form-label">Količina:</label>
+            <InputNumber @bind-Value="instrument.StockQuantity" class="form-control" />
+            <ValidationMessage For="@(() => instrument.StockQuantity)" class="text-danger" />
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success w-100">Sačuvaj</button>
+            <button type="button" class="btn btn-link w-100 mt-2" @onclick="Cancel">Odustani</button>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter] public int? Id { get; set; }
+
+    // Samo jedan model, onaj koji EditForm koristi
+    [SupplyParameterFromForm]
+    public InstrumentDto instrument { get; set; } = new();
+
+    private string Naslov => Id == null ? "Novi instrument" : "Izmena instrumenta";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Ako je ID tu, a ime prazno, znači da učitavamo prvi put (ne nakon POST-a)
+        if (Id != null && string.IsNullOrEmpty(instrument.Name))
+        {
+            try
+            {
+                instrument = await Http.GetFromJsonAsync<InstrumentDto>($"api/instruments/{Id}") ?? new();
+            }
+            catch (Exception ex) { Console.WriteLine(ex.Message); }
+        }
+    }
+
+    private async Task SaveInstrument()
+    {
+        // Ako dođeš ovde, znači da je interaktivnost proradila!
+        var response = Id == null
+            ? await Http.PostAsJsonAsync("api/instruments", instrument)
+            : await Http.PostAsJsonAsync($"api/instruments/izmeni-instrument/{Id}", instrument);
+
+        if (response.IsSuccessStatusCode) Navigation.NavigateTo("/");
+    }
+
+    private void Cancel() => Navigation.NavigateTo("/");
+}

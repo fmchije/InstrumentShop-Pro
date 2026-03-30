@@ -1,0 +1,57 @@
+﻿@using InstrumentShop.Components
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Components.Routing
+@using Microsoft.AspNetCore.Components
+@using InstrumentShop.Client
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" /> 
+    <link rel="stylesheet" href="InstrumentShop.styles.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <link rel="stylesheet" href="app.css" />
+    <HeadOutlet @rendermode="InteractiveWebAssembly" />
+    <style>
+        /* Ovaj CSS vraća Blazor izgled: Sidebar levo, sadržaj desno */
+        .page {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1;
+        }
+
+        .sidebar {
+            background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+            width: 250px;
+        }
+
+        
+
+        /* Kartice za tvoje instrumente */
+        .instrument-card {
+            transition: 0.3s;
+            border-radius: 15px;
+        }
+
+            .instrument-card:hover {
+                transform: scale(1.02);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            }
+    </style>
+</head>
+
+<body>
+    @* Sada ga zovemo direktno iz klijenta *@
+    <Routes @rendermode="InteractiveWebAssembly" />
+
+    <script src="_framework/blazor.web.js"></script>
+</body>
+</html>

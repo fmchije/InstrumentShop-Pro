@@ -1,0 +1,13 @@
+﻿@using InstrumentShop.Client.Pages
+
+<Router AppAssembly="typeof(Program).Assembly" AdditionalAssemblies="new[] { typeof(InstrumentShop.Client._Imports).Assembly }">
+    <Found Context="routeData">
+        <RouteView RouteData="routeData" DefaultLayout="typeof(InstrumentShop.Client.Components.Layout.MainLayout)" />
+        <FocusOnNavigate RouteData="routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <LayoutView Layout="typeof(MainLayout)">
+            <p role="alert">Žao nam je, nema ništa na ovoj adresi.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
