@@ -46,16 +46,20 @@ JS Interop: Used JavaScript for client-side confirmations and DOM manipulation t
 📸 Screenshots
 
 ### Dashboard
-![Dashboard](.Screenshots/Screenshot1.jpg)
+
+![Dashboard](./Screenshots/Screenshot1.jpg)
 
 ### API Documentation
-![Swagger Interface](.Screenshots/Swagger1.jpg)
+
+![Swagger Interface](./Screenshots/Swagger1.jpg)
 
 ### Successful Data Update Example
-![API Response](.Screenshots/Swagger2.jpg)
+
+![API Response](./Screenshots/Swagger2.jpg)
 
 ### Test Explorer
-![Test](.Screenshots/Testovi.jpg)
+
+![Test](./Screenshots/Testovi.jpg)
 
 
 📂 How to Run
