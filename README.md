@@ -44,13 +44,19 @@ Dynamic Search: Real-time filtering using oninput events.
 JS Interop: Used JavaScript for client-side confirmations and DOM manipulation to enhance UX.
 
 📸 Screenshots
-MOJ SAVET: Da, obavezno stavi slike! Ljudi su vizuelna bića. Stavi barem ove tri:
 
-Dashboard: Glavna stranica sa instrumentima (da se vidi Bootstrap grid i search bar).
+### Dashboard
+![Dashboard](.Screenshots/Screenshot1.jpg)
 
-Test Explorer: Screenshot iz Visual Studia koji pokazuje "zelene kvačice" svih tvojih xUnit testova (ovo je ogromno za QA pozicije!).
+### API Documentation
+![Swagger Interface](.Screenshots/Swagger1.jpg)
 
-API Response: Screenshot iz Swagger-a (onaj plavi prozor u browseru) koji pokazuje tvoj GET ili DELETE endpoint.
+### Successful Data Update Example
+![API Response](.Screenshots/Swagger2.jpg)
+
+### Test Explorer
+![Test](.Screenshots/Testovi.jpg)
+
 
 📂 How to Run
 Clone the repository.
