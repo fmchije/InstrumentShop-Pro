@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstrumentShop.Client", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstrumentShop.Shared", "..\InstrumentShop.Shared\InstrumentShop.Shared.csproj", "{5BBD6640-C694-4E4A-AD54-ACEB0CEC750D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstrumentShop.Tests", "InstrumentShop.Tests\InstrumentShop.Tests.csproj", "{3C262F30-A2C8-430E-8171-5282A85D6829}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{5BBD6640-C694-4E4A-AD54-ACEB0CEC750D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BBD6640-C694-4E4A-AD54-ACEB0CEC750D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BBD6640-C694-4E4A-AD54-ACEB0CEC750D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C262F30-A2C8-430E-8171-5282A85D6829}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C262F30-A2C8-430E-8171-5282A85D6829}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C262F30-A2C8-430E-8171-5282A85D6829}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C262F30-A2C8-430E-8171-5282A85D6829}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

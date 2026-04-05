@@ -1,6 +1,8 @@
+using InstrumentShop;
 using InstrumentShop.Client.Pages;
 using InstrumentShop.Components;
 using InstrumentShop.Data;
+using InstrumentShop.Services;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -14,7 +16,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
-
+builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
+builder.Services.AddScoped<ICurrencyService, CurrencyService>();
 builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri("https://localhost:7237/") // <--- PROVERI SVOJ PORT U BROWSERU!

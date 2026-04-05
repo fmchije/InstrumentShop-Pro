@@ -2,6 +2,7 @@
 @using InstrumentShop.Shared
 @using System.Net.Http.Json
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
 
 @* Postavljamo interaktivnost da bi Search bar radio u browseru *@
 @rendermode InteractiveWebAssembly
@@ -38,8 +39,17 @@ else
                             <p class="text-muted mb-1">Na stanju: <strong>@instrument.StockQuantity</strong> kom.</p>
                             <p class="text-primary fw-bold fs-5">@instrument.Price €</p>
                         </div>
-                        <div class="card-footer bg-white border-0">
-                            <button class="btn btn-dark btn-sm w-100">Detalji</button>
+                        <div class="card-footer bg-white border-0 d-flex gap-2">
+                            @* Dugme Detalji - za sada može samo da ispiše ID u konzolu *@
+                            <button class="btn btn-outline-dark btn-sm flex-grow-1" @onclick="@(() => Console.WriteLine($"Detalji za ID: {instrument.Id}"))">
+                                Detalji
+                            </button>
+
+                            @* NOVO: Dugme za brisanje *@
+                            <button class="btn btn-danger btn-sm"
+                                    @onclick="async () => { if (await ProveriPotvrdu()) await DeleteInstrument(instrument.Id); }">
+                                <i class="bi bi-trash"></i> Obriši
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -119,5 +129,9 @@ else
             }
         }
     }
-    
+    private async Task<bool> ProveriPotvrdu()
+    {
+        // Ovo poziva standardni JavaScript 'confirm' prozor u browseru
+        return await JSRuntime.InvokeAsync<bool>("confirm", "Da li ste sigurni da želite da obrišete ovaj instrument?");
+    }
 }
