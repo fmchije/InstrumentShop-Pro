@@ -32,9 +32,13 @@ Designed a RESTful API with advanced data validation using Data Annotations.
 Currency Service: Implemented a service that simulates real-time currency conversion, mimicking integration with SOAP/REST third-party systems.
 
 4. Performance Optimization & Monitoring
-Async/Await: Applied asynchronous programming across the entire stack for efficient data fetching.
+Async/Await: Applied asynchronous programming across the entire stack for non-blocking data fetching and improved server scalability.
 
-Structured Logging: Integrated the ILogger interface to track critical operations (e.g., data deletion), enabling easier diagnostics in production environments.
+Read-Only Optimization: Used .AsNoTracking() in Entity Framework Core for high-performance data retrieval, significantly reducing memory overhead by bypassing change tracking.
+
+Scalable Validation: Integrated FluentValidation to implement strict business rules and data integrity checks, decoupling validation logic from the data models.
+
+Structured Logging: Integrated the ILogger interface to track critical operations (e.g., data deletion), enabling easier diagnostics and system auditing in production environments.
 
 5. Frontend Interactivity
 Built a responsive UI in Blazor WebAssembly with Bootstrap.
