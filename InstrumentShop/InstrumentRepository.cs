@@ -14,7 +14,7 @@ public class InstrumentRepository : IInstrumentRepository
 
     public async Task<IEnumerable<Instrument>> GetAllAsync()
     {
-        return await _context.Instruments.ToListAsync();
+        return await _context.Instruments.AsNoTracking().ToListAsync();
     }
     public async Task<Instrument> GetByIdAsync(int id) => await _context.Instruments.FindAsync(id);
 

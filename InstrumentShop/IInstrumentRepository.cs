@@ -9,5 +9,7 @@ namespace InstrumentShop
         Task AddAsync(Instrument instrument);
         Task UpdateAsync(Instrument instrument);
         Task DeleteAsync(Instrument instrument);
+
+
     }
 }
